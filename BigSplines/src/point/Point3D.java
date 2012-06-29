@@ -6,6 +6,7 @@ public class Point3D extends AbstractVector{
 		super(x, y, z);
 	}
 
+	@Override
 	public Point3D multiply(float f) {
 		return new Point3D(f*x(), f*y(), f*z());
 	}
@@ -19,10 +20,21 @@ public class Point3D extends AbstractVector{
 		return new Point3D(x()+v.x(), y()+v.y(), z()+v.z());
 	}
 	
-	public Point3D negate() {
-		return new Point3D(-x(), -y(), -z());
+	public static final Point3D ORIGIN = new Point3D(0, 0, 0);
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode() + 37;
 	}
 	
-	public static final Point3D ORIGIN = new Point3D(0, 0, 0);
+	@Override
+	public boolean equals(Object o) {
+		if(! (o instanceof Point3D))
+			return false;
+		Point3D p = (Point3D) o;
+		return x() == p.x() && 
+				y() == p.y() && 
+				 z() == p.z();
+	}
 
 }

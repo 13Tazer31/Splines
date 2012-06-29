@@ -24,9 +24,13 @@ public abstract class AbstractVector {
 		return z;
 	}
 	
-	public abstract AbstractVector add(Vector3D v) ;
+	public abstract AbstractVector multiply(float f);
 	
-	public abstract AbstractVector negate() ;
+	public AbstractVector negate() {
+		return multiply(-1);
+	}
+	
+	public abstract AbstractVector add(Vector3D v) ;
 	
 	public double length() {
 		return Math.sqrt(x()*x()+y()*y()+z()*z());
@@ -35,6 +39,15 @@ public abstract class AbstractVector {
 	public double norm(int p) {
 		double result = Math.pow(x(), p) + Math.pow(y(), p) + Math.pow(z(), p);
 		return Math.pow(result, 1/p);
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = new Float(x()).hashCode();
+		hash = (hash >> 7) ^ new Float(y()).hashCode();
+		hash = (hash >> 7) ^ new Float(z()).hashCode();
+		
+		return hash;
 	}
 	
 
