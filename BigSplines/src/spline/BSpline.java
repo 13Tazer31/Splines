@@ -39,6 +39,12 @@ public class BSpline {
 	
 	private Point3D[] points;
 	
+	public float eval(float u) {
+		int l = range(knots, u);
+		
+		return -1;
+	}
+	
 	
 	private <T> T[] arrayCopy(T[] array) {
 		int n = array.length;
@@ -59,6 +65,26 @@ public class BSpline {
 		return copy;
 	}
 	
+	private int range(float[] a, float u) {
+		int n = a.length;
+		if(u < a[degree] || a[n-1] < u  )
+			throw new IllegalArgumentException("u has to be between knots(degree()) and knots(amountOfKnots()-1)");
+		int upper = n;
+		int lower = 0;
+
+		while(upper >= lower){
+			int i = (upper+lower)/2;
+			
+			if(u < a[i])
+				upper = i;
+			else if(a[i+1] <= u)
+				lower = i+1;
+			else 
+				return i;
+		}
+		return -1;
+			
+	}
 	
 
 }
