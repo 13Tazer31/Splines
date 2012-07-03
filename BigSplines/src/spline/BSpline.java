@@ -51,7 +51,7 @@ public class BSpline {
 	}
 	
 	private void setKnots(float[] knots) {
-		this.knots = arrayCopy(knots);
+		this.knots = Arrays.copyOf(knots, knots.length);
 		Arrays.sort(this.knots);
 	}
 	
@@ -60,7 +60,7 @@ public class BSpline {
 	public Point3D controlPoints(int i) {
 		if(! isValidControlPointsIndex(i)) 
 			throw new IllegalArgumentException("Index has to be between " + -degree() + " and "+ p() + ".");
-		return points[i+degree()];
+		return controlPoints[i+degree()];
 	}
 	
 	public boolean isValidControlPointsIndex(int i) {
@@ -69,14 +69,14 @@ public class BSpline {
 	}
 	
 	private void setControlPoints(Point3D[] controlPoints) {
-		points = arrayCopy(controlPoints);
+		this.controlPoints = Arrays.copyOf(controlPoints, controlPoints.length);
 	}
 	
 	public int p() {
-		return points.length-degree();
+		return controlPoints.length-degree();
 	}
 	
-	private Point3D[] points;
+	private Point3D[] controlPoints;
 	
 	
 	public Point3D recursiveEval(float u) {
@@ -111,26 +111,6 @@ public class BSpline {
 			else return i;
 		}
 		return -1;
-	}
-	
-	
-	private Point3D[] arrayCopy(Point3D[] array) {
-		int n = array.length;
-		@SuppressWarnings("unchecked")
-		Point3D[] copy = new Point3D[n];
-		
-		for(int i = 0; i < n; i++)
-			copy[i] = array[i];
-		return copy;
-	}
-	
-	private float[] arrayCopy(float[] array) {
-		int n = array.length;
-		float[] copy = new float[n];
-		
-		for(int i = 0; i < n; i++)
-			copy[i] = array[i];
-		return copy;
 	}
 	
 
