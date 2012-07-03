@@ -50,5 +50,9 @@ public abstract class AbstractVector {
 		return hash;
 	}
 	
+	public String toString() {
+		return "("+x()+", " + y() + ", " + z() + ")";
+	}
+	
 
 }

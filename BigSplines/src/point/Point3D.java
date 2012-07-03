@@ -20,6 +20,22 @@ public class Point3D extends AbstractVector{
 		return new Point3D(x()+v.x(), y()+v.y(), z()+v.z());
 	}
 	
+	public static Point3D affineCombination(float[] a, Point3D[] points) {
+		if(a.length != points.length)
+			throw new IllegalArgumentException("Both arrays have to be the same length.");
+		int n = a.length;
+		float px = 0;
+		float py = 0;
+		float pz = 0;
+		for(int i = 0; i < n; i++) {
+			px += a[i]*points[i].x();
+			py += a[i]*points[i].y();
+			pz += a[i]*points[i].z();
+		}
+		return new Point3D(px, py, pz);
+			
+	}
+	
 	public static final Point3D ORIGIN = new Point3D(0, 0, 0);
 	
 	@Override
