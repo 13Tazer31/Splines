@@ -1,10 +1,16 @@
 package spline;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
+
+import javax.naming.OperationNotSupportedException;
+
 import point.*;
 
-public class BSpline {
+public class BSpline{
 	
 	public static void main(String[] args) {
 		float[] knots = {0,0,0,0,1,2,3,4,4,4,4};
@@ -63,6 +69,13 @@ public class BSpline {
 		return controlPoints[i+degree()];
 	}
 	
+	public Iterable<Point3D> controlPoints() {
+		ArrayList<Point3D> points = new ArrayList<Point3D>();
+		for(Point3D p : controlPoints)
+			points.add(p);
+		return points;
+	}
+	
 	public boolean isValidControlPointsIndex(int i) {
 		return i >= -degree() && 
 				i < p();
@@ -85,7 +98,7 @@ public class BSpline {
 		return deBoor(degree(), range(u), u);
 	}
 	
-	public Point3D deBoor(int k, int i, float u) {
+	private Point3D deBoor(int k, int i, float u) {
 		System.out.println(k + ": " + i);
 		if(k == 0)
 			return controlPoints(i); 
@@ -94,6 +107,11 @@ public class BSpline {
 		float[] a = {(1-x), x};
 		Point3D[] points = {deBoor(k-1, i-1, u), deBoor(k-1, i, u)};
 		return Point3D.affineCombination(a, points);
+	}
+	
+	public void addPoint(float u) {
+		int l = range(u);
+		
 	}
 	
 	private int range(float u) {
@@ -112,6 +130,8 @@ public class BSpline {
 		}
 		return -1;
 	}
+
+	
 	
 
 	
